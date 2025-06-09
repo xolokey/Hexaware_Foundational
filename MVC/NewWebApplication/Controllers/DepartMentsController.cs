@@ -1,10 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewWebApplication.Models;
+using System.Xml.Linq;
 
 namespace NewWebApplication.Controllers
 {
     public class DepartMentsController : Controller
     {
+        public static List<Department> deptList = new List<Department>()
+        {
+                new Department() { Id = 102,Name = "Tester",Location = "Bengalur"},
+                new Department() { Id = 103, Name = "Developer",Location = "Mumbai"},
+                new Department() { Id = 104,Name = "Software Engineer",Location = "Mumbai"},
+                new Department() { Id = 105,Name = "HR", Location = "Chennai"}
+
+        };
         public IActionResult Index()
         {
             Department department = new Department();
@@ -16,6 +25,26 @@ namespace NewWebApplication.Controllers
             ViewData["Domain"] = " .Net FSD";
             ViewBag.CompanyName = "Hexaware";
             return View(department);
+        }
+        public IActionResult Department()
+        {
+            //Department dept = new Department();
+            //new dept
+            //deptList= new List<Department>()
+            
+            return View(deptList);
+        }
+        //To Get from use and to insert in the Table
+        public IActionResult Create()
+        {
+            return View();
+
+        }
+        [HttpPost]
+        public IActionResult Create(Department department)
+        {
+            deptList.Add(department);
+            return RedirectToAction("Department");
         }
     }
 }

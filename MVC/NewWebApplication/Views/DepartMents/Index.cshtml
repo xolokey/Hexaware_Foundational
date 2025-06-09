@@ -3,16 +3,19 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Department List";
+    ViewData["Title"] = "INFO";
 }
 <div class="text-center">
 <h1>Welcome to the DepartMent...</h1>
 <h2>List Off Departments</h2>
+
 <h3>Using ViewData</h3>
 <p>Name:@ViewData["Name"]</p>
 <p>Domain:@ViewData["Domain"]</p>
+
 <h3>To View Bag</h3>
 <p>Company: @ViewBag.CompanyName</p>
+
 <h3>Strongy Typed View</h3>
 <p>Department ID:@Model.Id</p>
 <p>Department Name:@Model.Name</p>

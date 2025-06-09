@@ -1,0 +1,32 @@
+﻿@model  IEnumerable<NewWebApplication.Models.Department>;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Department";
+}
+<div class="text-center">
+    <h2>List Of Department...</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach(var dept in Model)
+            {
+                <tr>
+                    <td>@dept.Id</td>
+                    <td>@dept.Name</td>
+                    <td>@dept.Location</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    
+
+</div>
