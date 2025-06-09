@@ -1,0 +1,35 @@
+﻿@model BookStoreApp.Models.Book;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = "Add Book";
+}
+
+<div class="container">
+    <h2>Add New Book To the Store</h2>
+    <form asp-action="NewBook" method="post">
+
+        <div class="form-group">
+            <label asp-for="BookID"></label>
+            <input asp-for="BookID" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="BookName"></label>
+            <input asp-for="BookName" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="BookType"></label>
+            <input asp-for="BookType" class="form-control" />
+        </div>
+        <div>
+            <label asp-for="BookPrice"></label>
+            <input asp-for="BookPrice" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+
+    </form>
+
+
+</div>
