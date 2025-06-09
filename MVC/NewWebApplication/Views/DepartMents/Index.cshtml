@@ -1,4 +1,5 @@
-﻿@*
+﻿@model NewWebApplication.Models.Department;
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -12,4 +13,8 @@
 <p>Domain:@ViewData["Domain"]</p>
 <h3>To View Bag</h3>
 <p>Company: @ViewBag.CompanyName</p>
+<h3>Strongy Typed View</h3>
+<p>Department ID:@Model.Id</p>
+<p>Department Name:@Model.Name</p>
+<p>Departmet Location: @Model.Location</p>
 </div>
