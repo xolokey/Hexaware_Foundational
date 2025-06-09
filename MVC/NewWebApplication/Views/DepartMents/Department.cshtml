@@ -22,11 +22,14 @@
                     <td>@dept.Id</td>
                     <td>@dept.Name</td>
                     <td>@dept.Location</td>
+                    <td>@Html.ActionLink("Department Details","Details","DepartMents",new{Id = dept.Id},null)</td>
                 </tr>
             }
+           
 
         </tbody>
     </table>
+   @*@ @await Html.PartialAsync("_DepartmentDetails",Model.First())*@
     
 
 </div>

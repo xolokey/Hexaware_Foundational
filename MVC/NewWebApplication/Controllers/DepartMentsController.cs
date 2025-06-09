@@ -27,11 +27,7 @@ namespace NewWebApplication.Controllers
             return View(department);
         }
         public IActionResult Department()
-        {
-            //Department dept = new Department();
-            //new dept
-            //deptList= new List<Department>()
-            
+        { 
             return View(deptList);
         }
         //To Get from use and to insert in the Table
@@ -43,8 +39,15 @@ namespace NewWebApplication.Controllers
         [HttpPost]
         public IActionResult Create(Department department)
         {
+            //deptList =new List<Department>();
             deptList.Add(department);
             return RedirectToAction("Department");
+     
+        }
+        public IActionResult Details(int Id)
+        {
+            var departmentDetails = deptList.FirstOrDefault(d=>d.Id==Id);
+            return PartialView("_DepartmentDetails",departmentDetails);
         }
     }
 }
