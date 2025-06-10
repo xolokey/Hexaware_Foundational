@@ -27,7 +27,32 @@ namespace Log4netDemo.Controllers
             }
             return View();
         }
+        public JsonResult GetjsonResult()
+        {
+            var data = new { Name = "lokey", Age=30,Occupation="Software Dev"};
+            return Json(data);
+        }
 
+        public ContentResult GetContentResult()
+        {
+            string content = "Hello";
+            return Content(content);
+        }
+
+        public IActionResult RedirectToGoogle()
+        {
+            return Redirect("https://www.google.com/");
+        }
+        public IActionResult RedirectToPrivacy()
+        {
+            return RedirectToAction("Privacy","Home");
+        }
+        public IActionResult DownloadTheFile()
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes("wwwroot/sample.txt");
+            return File(fileBytes,"application/octet-stream","sample.txt");
+
+        }
         public IActionResult Privacy()
         {
             return View();
