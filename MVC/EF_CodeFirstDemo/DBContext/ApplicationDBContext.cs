@@ -1,5 +1,7 @@
 ﻿using EF_CodeFirstDemo.Models;
 using Microsoft.EntityFrameworkCore;
+
+
 namespace EF_CodeFirstDemo.DBContext
 {
     public class ApplicationDBContext:DbContext
