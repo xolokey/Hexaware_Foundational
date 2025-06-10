@@ -29,5 +29,12 @@ namespace BookStoreApp.Controllers
             book.Add(newbook);
             return RedirectToAction("Index");
         }
+        //To Find The Book
+        public IActionResult MoreInfo(int BookID)
+        {
+            var BookInffo = book.FirstOrDefault(b=> b.BookID==BookID);
+
+            return PartialView("_MoreInfo",BookInffo);
+        }
     }
 }

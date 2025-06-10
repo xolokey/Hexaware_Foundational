@@ -16,6 +16,7 @@
                 <th>Book Name</th>
                 <th> Type</th>
                 <th>Price</th>
+                <th>MoreInfo</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                     <td>@book.BookName</td>
                     <td>@book.BookType</td>
                     <td>@book.BookPrice</td>
+                    <td>@Html.ActionLink("Book MoreInfo","MoreInfo","Books",new{BookID=book.BookID},null)</td>
                 </tr>
             }
         </tbody>
