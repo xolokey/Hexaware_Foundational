@@ -54,7 +54,7 @@ namespace EF_CodeFirstDemo.Controllers
         //To Edit the Data in DataBase
         public IActionResult Edit(int id)
         {
-            var department = _context.Departments.FirstOrDefault(d=>d.Id == id);
+            var department = _context.Departments.FirstOrDefault(d=>d.DepartmentId == id);
             if (department == null)
             {
                 return NotFound();
@@ -85,7 +85,7 @@ namespace EF_CodeFirstDemo.Controllers
         //To Delete Data in the Table
         public IActionResult Delete(int id) 
         { 
-            var department = _context.Departments.FirstOrDefault(d=>d.Id==id);
+            var department = _context.Departments.FirstOrDefault(d=>d.DepartmentId==id);
             if (department == null)
             {
                 return NotFound();

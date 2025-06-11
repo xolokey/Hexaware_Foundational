@@ -11,5 +11,6 @@ namespace EF_CodeFirstDemo.DBContext
 
         }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
