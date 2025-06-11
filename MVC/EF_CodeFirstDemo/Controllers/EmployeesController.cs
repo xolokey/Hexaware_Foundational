@@ -89,7 +89,7 @@ namespace EF_CodeFirstApproch.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var employee = _context.Employees.Find(id);
-            _context.Employees.Remove(employee);
+            _context.Employees.Remove(employee!);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
