@@ -1,12 +1,13 @@
-using EF_DBFirstDemo.Models;
+using AssertManagementMVC.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<BikeStoresContext>(options =>
+builder.Services.AddDbContext<AssertManagementMvcContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

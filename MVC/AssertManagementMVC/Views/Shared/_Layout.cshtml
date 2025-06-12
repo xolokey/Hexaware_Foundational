@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Asset Management System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AssetManagementMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-warning" asp-area="" asp-controller="Home" asp-action="Index">AssetManager</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <!-- Assets Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="assetsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Assets
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="assetsDropdown">
+                                <li><a class="dropdown-item" asp-controller="Assets" asp-action="Index">All Assets</a></li>
+                                <li><a class="dropdown-item" asp-controller="Assets" asp-action="Create">Add New Asset</a></li>
+                                <li><a class="dropdown-item" asp-controller="AssetCategories" asp-action="Index">Categories</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Employees Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="employeesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Employees
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="employeesDropdown">
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">All Users</a></li>
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Create">Add User</a></li>
+                                <li><a class="dropdown-item" asp-controller="Roles" asp-action="Index">Roles</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Allocations -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="EmployeeAssets" asp-action="Index">Allocations</a>
+                        </li>
+
+                        <!-- Service Requests -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="ServiceRequests" asp-action="Index">Service Requests</a>
+                        </li>
+
+                        <!-- Audit -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="auditDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Audit
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="auditDropdown">
+                                <li><a class="dropdown-item" asp-controller="AuditRequests" asp-action="Index">Audit Requests</a></li>
+                                <li><a class="dropdown-item" asp-controller="AssetAuditLogs" asp-action="Index">Audit Logs</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Logs -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Logs" asp-action="Index">System Logs</a>
+                        </li>
+
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Account" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer bg-light border-top mt-auto py-3">
+        <div class="container text-center text-muted">
+            &copy; @DateTime.Now.Year - Asset Management System | <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
