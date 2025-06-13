@@ -52,8 +52,8 @@ namespace WebAPIDemo.Controllers
             
             }
         }
-        [HttpPost("CreateDepartment")]
 
+        [HttpPost("CreateDepartment")]
         public IActionResult CreateDepartment(SubDepartment department)
         {
             try
