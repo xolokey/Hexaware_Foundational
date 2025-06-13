@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<AssertManagementMVC.Models.Asset>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Assert";
 }
 
-<h1>Index</h1>
+<h1>-----Asserts-----</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class ="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-striped table-hover table-sm table-bordered">
+    <thead class="table-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.AssetNo)
