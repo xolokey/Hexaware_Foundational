@@ -16,7 +16,7 @@ namespace WebAPIDemo.Controllers
         }
 
         [HttpGet("GetAllStudent")]
-        public async Task<List<Student>> GetAllStudents()
+        public List<Student> GetAllStudents()
         {
             try
             {
