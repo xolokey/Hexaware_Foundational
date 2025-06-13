@@ -30,7 +30,7 @@ namespace WebAPIDemo.Controllers
             }
         }
 
-        [HttpGet("GetDepartment{DepartmentId}")]
+        [HttpGet("GetDepartment{DepartmentId:int}")]
 
         public IActionResult GetDepartment(int DepartmentId)
         {
@@ -73,7 +73,7 @@ namespace WebAPIDemo.Controllers
         
         }
 
-        [HttpDelete("DeleteDepartment{DepartmentId}")]
+        [HttpDelete("DeleteDepartment{DepartmentId:int}")]
         public IActionResult DeleteDepartment(int DepartmentId)
         {
             try
@@ -90,9 +90,7 @@ namespace WebAPIDemo.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpPut("UpdateDepartment" +
-            "" +
-            "{DepartmentId}")]
+        [HttpPut("UpdateDepartment{DepartmentId:int}")]
 
         public IActionResult UpdateDepartment(SubDepartment department)
         {
