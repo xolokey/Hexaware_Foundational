@@ -1,30 +1,29 @@
 ﻿using WebAPIDemo.Models;
+using Microsoft.EntityFrameworkCore;
+using WebAPIDemo.DBContext;
 
 namespace WebAPIDemo.Repository
 {
    
-public class StudentService : IStudentService
+    public class StudentService : IStudentService
     {
-        public static List<Student> students = new List<Student>()
+
+        public readonly AppDBContext _context;
+        public StudentService(AppDBContext context)
         {
-            // Example initialization
-            new Student { StudentId = 1, StudentName = "John Doe", StudentAge = 16,StudentGender="Male", StudentCity = "Chennai", StudentEmail = "john.doe@example.com", StudentCourse = "Math" },
-            new Student { StudentId = 2, StudentName = "Jane Smith", StudentAge = 17,StudentGender="Male", StudentCity = "Banglore", StudentEmail = "jane.smith@example.com", StudentCourse = "Science" },
-            new Student { StudentId = 3, StudentName = "Mowny", StudentAge = 17,StudentGender="Female", StudentCity = "Chennai", StudentEmail = "jane.smith@example.com", StudentCourse = "Math" },
-            new Student { StudentId = 4, StudentName = "Lokey", StudentAge = 17,StudentGender="Male", StudentCity = "Banglore", StudentEmail = "jane.smith@example.com", StudentCourse = "Science" }
-            
-        };
+            _context = context;
+        }
 
         public List<Student> GetAllStudents()
         {
-            return students;
+            return _context.Students.ToList();
         }
 
         public int AddStudent(Student student)
         {
             if (student != null)
             {
-                students.Add(student);
+                _context.Students.Add(student);
                 return student.StudentId;
             }
             else
@@ -33,10 +32,10 @@ public class StudentService : IStudentService
 
         public string DeleteStudent(int studentId)
         {
-            var student = students.Where(s => s.StudentId == studentId).FirstOrDefault();
+            var student = _context.Students.Where(s => s.StudentId == studentId).FirstOrDefault();
             if (student != null)
             {
-                students.Remove(student);
+                _context.Students.Remove(student);
                 return $"{student.StudentName} Removed";
             }
             else
@@ -47,7 +46,7 @@ public class StudentService : IStudentService
 
         public Student GetStudent(int StudentID)
         {
-            var student = students.Where(s => s.StudentId == StudentID).FirstOrDefault();
+            var student = _context.Students.Where(s => s.StudentId == StudentID).FirstOrDefault();
             if (student == null)
             {
                 return null;
@@ -60,10 +59,18 @@ public class StudentService : IStudentService
 
         public string UpdateStudent(Student student)
         {
-            var index = students.FindIndex(s => s.StudentId == student.StudentId);
-            if (index != -1)
+            var existingStudent = _context.Students.FirstOrDefault(s => s.StudentId == student.StudentId);
+            if (existingStudent != null)
             {
-                students[index] = student;
+                existingStudent.StudentName = student.StudentName;
+                existingStudent.StudentAge = student.StudentAge;
+                existingStudent.StudentGender = student.StudentGender;
+                existingStudent.StudentCity = student.StudentCity;
+                existingStudent.StudentEmail = student.StudentEmail;
+                existingStudent.StudentCourse = student.StudentCourse;
+                existingStudent.CourseId = student.CourseId;
+
+                _context.SaveChanges();
                 return $"{student.StudentName} Updated Successfully";
             }
             else
@@ -74,7 +81,10 @@ public class StudentService : IStudentService
 
         public Student GetStudentByName(string StudentName)
         {
-            var student = students.Where(s => s.StudentName?.ToLower() == StudentName.ToLower()).FirstOrDefault();
+            var student = _context.Students
+                .Where(s => s.StudentName != null &&
+                            s.StudentName.ToLower(System.Globalization.CultureInfo.CurrentCulture) == StudentName.ToLower(System.Globalization.CultureInfo.CurrentCulture))
+                .FirstOrDefault();
             if (student == null)
             {
                 return null;
@@ -84,7 +94,7 @@ public class StudentService : IStudentService
 
         public List<Student> GetStudentByCourseOrCity(string course, string city)
         {
-            var filteredStudents = students.AsQueryable();
+            var filteredStudents = _context.Students.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(course))
             {
@@ -105,11 +115,11 @@ public class StudentService : IStudentService
             var filterstudents = new List<Student>();
             if (!string.IsNullOrEmpty(StudentName))
             {
-                filterstudents = students.Where(s => s.StudentName.Equals(StudentName, StringComparison.OrdinalIgnoreCase)).ToList();
+                filterstudents = _context.Students.Where(s => s.StudentName.Equals(StudentName, StringComparison.OrdinalIgnoreCase)).ToList();
             }
             if (StudentId > 0) 
             {
-                filterstudents.AddRange(students.Where(s => s.StudentId == StudentId).ToList());
+                filterstudents.AddRange(_context.Students.Where(s => s.StudentId == StudentId).ToList());
             }
             return filterstudents; 
         }

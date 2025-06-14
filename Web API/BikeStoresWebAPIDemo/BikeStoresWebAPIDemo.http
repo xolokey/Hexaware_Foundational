@@ -1,0 +1,6 @@
+@BikeStoresWebAPIDemo_HostAddress = http://localhost:5070
+
+GET {{BikeStoresWebAPIDemo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
