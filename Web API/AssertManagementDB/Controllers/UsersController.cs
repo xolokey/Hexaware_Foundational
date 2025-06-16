@@ -39,13 +39,8 @@ namespace AssertManagementDB.Controllers
         {
             try
             {
-                
-                if (user != null) 
-                {
-                    _userService.UpdateUser(user,id);
-                    return Ok($"User With UserId:{user.UserId} Updated Successfully");
-                }
-                return NotFound("User Not Found!!!");
+                var Users = _userService.UpdateUser(user, id);
+                return Ok($"User With UserId:{user.UserId} Updated Successfully");
 
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
@@ -65,6 +60,29 @@ namespace AssertManagementDB.Controllers
 
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+        //To get All Users
+        [HttpGet("AllUser")]
+        public IActionResult AllUsers()
+        {
+            try
+            {
+                var users = _userService.GetUsers();
+                if (users != null)
+                {
+                    
+                    return Ok(users);
+                }
+                return NotFound("No User Found!!...");
+
+
+
+            }
+            catch(Exception ex) 
+            {
+                throw new Exception(ex.Message);
+
+            }
         }
     }
 }

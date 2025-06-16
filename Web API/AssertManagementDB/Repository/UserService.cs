@@ -35,7 +35,7 @@ namespace AssertManagementDB.Repository
         {
             try
             {
-                if (user != null) 
+                if (id == user.UserId) 
                 {
                     var users = _context.Users.FirstOrDefault(u=> u.UserId == id);
                     if(users != null)
