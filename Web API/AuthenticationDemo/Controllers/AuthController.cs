@@ -38,7 +38,7 @@ namespace AuthenticationDemo.Controllers
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.UserName), // Fixed CS1061: Changed 'user.Username' to 'user.UserName'
+                    new Claim(ClaimTypes.Name, user.UserName), 
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
                 foreach (var role in userRoles)

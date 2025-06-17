@@ -1,5 +1,7 @@
 
 using AuthenticationDemo.Authentication;
+using AuthenticationDemo.Context;
+using AuthenticationDemo.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +23,14 @@ namespace Authentication_Demo1
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<IproductRepo, ProductRepo>();
+            builder.Services.AddDbContext<ProductContext>(opts => opts.UseSqlServer(
+                builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
