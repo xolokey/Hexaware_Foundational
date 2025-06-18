@@ -1,0 +1,6 @@
+@AssertManagementAPI_HostAddress = http://localhost:5276
+
+GET {{AssertManagementAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
