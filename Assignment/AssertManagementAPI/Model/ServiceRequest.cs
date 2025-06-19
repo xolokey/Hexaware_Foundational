@@ -6,6 +6,7 @@ namespace AssertManagementAPI.Model
     {
         public class ServiceRequest
         {
+            [Key]
             public int RequestId { get; set; }
             public string? Description { get; set; }
             public required string IssueType { get; set; }
@@ -15,9 +16,9 @@ namespace AssertManagementAPI.Model
             [DataType(DataType.DateTime)]
             public DateTime? ResolvedDate { get; set; }
             public required int AssetId { get; set; }
-            public virtual Assert? Assert { get; set; }
+            public Assert? Assert { get; set; }
             public int UserId { get; set; }
-            public virtual User? User { get; set; }
+            public User? User { get; set; }
         }
     }
 }

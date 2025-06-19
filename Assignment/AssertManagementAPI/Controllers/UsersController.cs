@@ -1,4 +1,5 @@
-﻿using AssertManagementAPI.Model;
+﻿using AssertManagementAPI.DTO.User;
+using AssertManagementAPI.Model;
 using AssertManagementAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,8 @@ namespace AssertManagementAPI.Controllers
             try
             {
                 var users = _userService.GetAllUsers();
-                if (users == null)
-                {
-                    return NotFound();
-                }
+                return users == null || !users.Any() ? NotFound("No users Found") : Ok(users);
                 
-                 return Ok(users);
             }
             catch (Exception ex)
             {
@@ -40,11 +37,7 @@ namespace AssertManagementAPI.Controllers
             try
             {
                 var users = _userService.GetUserById(id);
-                if (users == null)
-                {
-                    return NotFound();
-                }
-                return Ok(users);
+                return users == null ? NotFound($"User with ID:{id} Not Found!"):Ok(users);
             }
             catch (Exception ex)
             {
@@ -53,16 +46,12 @@ namespace AssertManagementAPI.Controllers
             }
         }
         [HttpGet("searchbyname")]
-        public async Task<IActionResult> GetUsersByName(string name)
+        public async Task<IActionResult> GetUsersByName([FromQuery]string name)
         {
             try
             {
                 var users = _userService.GetUserByName(name);
-                if (users == null)
-                {
-                    return NotFound();
-                }
-                return Ok(users);
+                return users == null || !users.Any() ? NotFound($"User With Name:{name} Not Found!!") : Ok(users);
             }
             catch (Exception ex)
             {
@@ -71,16 +60,12 @@ namespace AssertManagementAPI.Controllers
             }
         }
         [HttpGet("searchbyrole")]
-        public async Task<IActionResult> GetUsersByRole(string role)
+        public async Task<IActionResult> GetUsersByRole([FromQuery]string role)
         {
             try
             {
                 var users = _userService.SearchUserByRole(role);
-                if (users == null)
-                {
-                    return NotFound();
-                }
-                return Ok(users);
+                return users == null || !users.Any() ? NotFound($"No users with Role:{role} Found!!") : Ok(users);
             }
             catch (Exception ex)
             {
@@ -89,11 +74,11 @@ namespace AssertManagementAPI.Controllers
             }
         }
         [HttpPost("addnewuser")]
-        public async Task<IActionResult> CreateProduct(User user)
+        public async Task<IActionResult> CreateProduct([FromBody]CreateUserDTO userDTO)
         {
             try
             {
-                var users = _userService.AddUser(user);
+                var users = _userService.AddUser(userDTO);
                 if (users == null)
                 {
                     return NotFound();
@@ -108,7 +93,7 @@ namespace AssertManagementAPI.Controllers
         }
 
         [HttpPut("updateuser/{id:int}")]
-        public async Task<IActionResult> CreateProduct(int id, User user)
+        public async Task<IActionResult> UpdateUser(int id,[FromBody] UpdateUserDTO user)
         {
             try
             {

@@ -4,6 +4,7 @@ using AssertManagementAPI.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssertManagementAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250618100914_NewUpgrade")]
+    partial class NewUpgrade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,19 @@ namespace AssertManagementAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AssertManagementAPI.Authentication.UserRole", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("UserRole");
+                });
 
             modelBuilder.Entity("AssertManagementAPI.Model.Assert", b =>
                 {
@@ -42,7 +58,7 @@ namespace AssertManagementAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("AssetValue")
+                    b.Property<decimal>("AssetValue")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("CategoryId")
@@ -229,23 +245,6 @@ namespace AssertManagementAPI.Migrations
                     b.ToTable("EmployeeAsserts");
                 });
 
-            modelBuilder.Entity("AssertManagementAPI.Model.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("Role");
-                });
-
             modelBuilder.Entity("AssertManagementAPI.Model.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -275,12 +274,6 @@ namespace AssertManagementAPI.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResetPasswordToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetTokenExpiry")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -379,11 +372,16 @@ namespace AssertManagementAPI.Migrations
 
             modelBuilder.Entity("AssertManagementAPI.Model.User", b =>
                 {
-                    b.HasOne("AssertManagementAPI.Model.Role", "UserRole")
-                        .WithMany("Users")
+                    b.HasOne("AssertManagementAPI.Authentication.UserRole", "UserRole")
+                        .WithMany("users")
                         .HasForeignKey("UserRoleRoleId");
 
                     b.Navigation("UserRole");
+                });
+
+            modelBuilder.Entity("AssertManagementAPI.Authentication.UserRole", b =>
+                {
+                    b.Navigation("users");
                 });
 
             modelBuilder.Entity("AssertManagementAPI.Model.Assert", b =>
@@ -403,11 +401,6 @@ namespace AssertManagementAPI.Migrations
             modelBuilder.Entity("AssertManagementAPI.Model.AuditRequest", b =>
                 {
                     b.Navigation("AssertAuditLogs");
-                });
-
-            modelBuilder.Entity("AssertManagementAPI.Model.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
