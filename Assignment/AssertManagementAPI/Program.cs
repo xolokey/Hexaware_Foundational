@@ -4,8 +4,8 @@ using AssertManagementAPI.Context;
 using AssertManagementAPI.Mapping;
 using AssertManagementAPI.Model;
 using AssertManagementAPI.Repository;
+using AssertManagementAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -22,9 +22,9 @@ builder.Services.AddSwaggerGen();
 
 // ✅ Register services and dependencies
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 builder.Services.AddScoped<JwtHelper>();
 
 //For Auto Mapper

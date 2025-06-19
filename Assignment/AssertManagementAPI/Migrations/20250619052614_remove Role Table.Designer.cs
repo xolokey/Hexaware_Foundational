@@ -4,6 +4,7 @@ using AssertManagementAPI.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssertManagementAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619052614_remove Role Table")]
+    partial class removeRoleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,10 +211,7 @@ namespace AssertManagementAPI.Migrations
                     b.Property<DateTime>("AllocationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AssertAssetId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssetId")
+                    b.Property<int>("AssertId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -225,7 +225,7 @@ namespace AssertManagementAPI.Migrations
 
                     b.HasKey("AllocationId");
 
-                    b.HasIndex("AssertAssetId");
+                    b.HasIndex("AssertId");
 
                     b.HasIndex("UserId");
 
@@ -343,7 +343,9 @@ namespace AssertManagementAPI.Migrations
                 {
                     b.HasOne("AssertManagementAPI.Model.Assert", "Assert")
                         .WithMany("EmployeeRequests")
-                        .HasForeignKey("AssertAssetId");
+                        .HasForeignKey("AssertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AssertManagementAPI.Model.User", "User")
                         .WithMany()

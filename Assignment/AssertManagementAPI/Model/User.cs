@@ -15,19 +15,14 @@ namespace AssertManagementAPI.Model
         [DataType(DataType.Password)]
         public required string Password { get; set; }
         public required string Role { get; set; }
-        public Role? UserRole { get; set; }
         [DataType(DataType.PhoneNumber)]
         public required string ContactNumber { get; set; }
         public string? Address { get; set; }
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; } 
         public string? ResetPasswordToken { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? ResetTokenExpiry { get; set; }
 
-        internal void UpdateUser(string v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }
