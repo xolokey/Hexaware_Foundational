@@ -30,11 +30,10 @@ namespace AssertManagementAPI.Repository
                         Role = userDTO.Role,
                         ContactNumber = userDTO.ContactNumber,
                         Address = userDTO.Address,
-                        IsActive = userDTO.IsActive,
                     };
                     _context.Users.Add(user);
                     _context.SaveChanges();
-                    return "....Product Added SuccessFully....";
+                    return "....User Added SuccessFully....";
                 }
                 else
                 {

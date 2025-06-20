@@ -21,6 +21,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ✅ Register services and dependencies
+builder.Services.AddScoped<IEmployeeAssertService,EmployeeAssertService>();
+builder.Services.AddScoped<IAssertService,AssertService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();

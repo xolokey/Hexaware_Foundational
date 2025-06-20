@@ -1,20 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AssertManagementAPI.Model
+namespace AssertManagementAPI.DTO.EmployeeAssert
 {
-    public class EmployeeAssert
+    public class CreateEmployeeAssertDTO
     {
-        [Key]
-        public int AllocationId {  get; set; }
-        public required int UserId {  get; set; }
-        public User? User { get; set; }
+        public required int UserId { get; set; }
         public required int AssetId { get; set; }
-        public Assert? Assert { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? AllocationDate { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? ReturnDate { get; set; }
         public bool IsActive { get; set; }
-        
     }
 }

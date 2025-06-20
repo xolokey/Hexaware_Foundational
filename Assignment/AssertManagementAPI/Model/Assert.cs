@@ -17,10 +17,9 @@ namespace AssertManagementAPI.Model
         public DateTime ManufacturingDate { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime ExpiryDate { get; set; }
-
         public int CategoryId { get; set; }
         public AssertCategory? Category {  get; set; }
-        public bool IsAvilable {  get; set; }
+        public bool IsAvailable { get; set; }
         public virtual ICollection<AuditRequest>? AuditRequests { get; set; } = new List<AuditRequest>();
         public ICollection<EmployeeAssert>? EmployeeRequests { get; set; }= new List<EmployeeAssert>();
         public ICollection<ServiceRequest>? ServiceRequests { get; set; }=new List<ServiceRequest>();

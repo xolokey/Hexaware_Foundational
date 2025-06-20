@@ -1,4 +1,5 @@
 ﻿using AssertManagementAPI.DTO.Assert;
+using AssertManagementAPI.DTO.EmployeeAssert;
 using AssertManagementAPI.DTO.User;
 using AssertManagementAPI.Model;
 using AutoMapper;
@@ -11,6 +12,7 @@ namespace AssertManagementAPI.Mapping
         {
             CreateMap<User,UserDTO>().ReverseMap();
             CreateMap<Assert,AssertDTO>().ReverseMap();
+            CreateMap<EmployeeAssert,EmployeeAssertDTO>().ReverseMap();
         }
     }
 }
