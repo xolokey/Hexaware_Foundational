@@ -20,7 +20,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.GetAllUsers();
+                var users = await _userService.GetAllUsers();
                 return users == null || !users.Any() ? NotFound("No users Found") : Ok(users);
                 
             }
@@ -36,7 +36,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.GetUserById(id);
+                var users = await _userService.GetUserById(id);
                 return users == null ? NotFound($"User with ID:{id} Not Found!"):Ok(users);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.GetUserByName(name);
+                var users = await _userService.GetUserByName(name);
                 return users == null || !users.Any() ? NotFound($"User With Name:{name} Not Found!!") : Ok(users);
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.SearchUserByRole(role);
+                var users = await _userService.SearchUserByRole(role);
                 return users == null || !users.Any() ? NotFound($"No users with Role:{role} Found!!") : Ok(users);
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.AddUser(userDTO);
+                var users = await _userService.AddUser(userDTO);
                 if (users == null)
                 {
                     return NotFound();
@@ -97,7 +97,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.UpdateUser(id, user);
+                var users = await _userService.UpdateUser(id, user);
                 if (users == null)
                 {
                     return NotFound();
@@ -115,7 +115,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var users = _userService.DeleteUser(id);
+                var users = await _userService.DeleteUser(id);
                 if (users == null)
                 {
                     return NotFound();

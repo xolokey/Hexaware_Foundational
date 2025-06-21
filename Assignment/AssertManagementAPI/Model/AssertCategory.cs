@@ -10,6 +10,7 @@ namespace AssertManagementAPI.Model
             public int CategoryId { get; set; }
             public required string CategoryName { get; set; }
             public string? Description { get; set; }
+            public bool IsActive { get; set; }
             public ICollection<Assert>? Assetrs { get; set; }= new List<Assert>();
         }
     }

@@ -2,6 +2,7 @@
 using AssertManagementAPI.DTO.User;
 using AssertManagementAPI.Model;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssertManagementAPI.Repository
 {
@@ -16,7 +17,7 @@ namespace AssertManagementAPI.Repository
         }
 
         //To Add User
-        public string AddUser(CreateUserDTO userDTO)
+        public async Task<string> AddUser(CreateUserDTO userDTO)
         {
             try
             {
@@ -31,8 +32,8 @@ namespace AssertManagementAPI.Repository
                         ContactNumber = userDTO.ContactNumber,
                         Address = userDTO.Address,
                     };
-                    _context.Users.Add(user);
-                    _context.SaveChanges();
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync();
                     return "....User Added SuccessFully....";
                 }
                 else
@@ -43,15 +44,16 @@ namespace AssertManagementAPI.Repository
             }
             catch (Exception ex) { throw new Exception($"Error in AddUser{ex.Message}"); }
         }
-        public string DeleteUser(int id)
+        //Delete User
+        public async Task<string> DeleteUser(int id)
         {
             try
             {
-                var user = _context.Users.Where(u => u.UserId == id).FirstOrDefault();
+                var user = await _context.Users.Where(u => u.UserId == id).FirstOrDefaultAsync();
                 if (user != null)
                 {
                     user.IsActive = false;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return "....User Deleted Succesfully....";
                 }
                 else
@@ -62,11 +64,11 @@ namespace AssertManagementAPI.Repository
                 throw new Exception($"Exception while deleting User{ex.Message}");
             }
         }
-        public string UpdateUser(int id, UpdateUserDTO userDTO)
+        public async Task<string> UpdateUser(int id, UpdateUserDTO userDTO)
         {
             try
             {
-                var user = _context.Users.Where(u => u.UserId == id).FirstOrDefault();
+                var user = await _context.Users.Where(u => u.UserId == id).FirstOrDefaultAsync();
                 if (user != null)
                 {
                     user.Name = userDTO.Name;
@@ -74,7 +76,7 @@ namespace AssertManagementAPI.Repository
                     user.ContactNumber = userDTO.ContactNumber;
                     user.Address = userDTO.Address;
                     user.IsActive = userDTO.IsActive;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return $"....User With {id} Updated Succesfully....";
                 }
                 else
@@ -83,11 +85,11 @@ namespace AssertManagementAPI.Repository
             catch (Exception ex) { throw new Exception($"Exceptions While Updating User {ex.Message}"); }
 
         }
-        public List<UserDTO> GetAllUsers()
+        public async Task<List<UserDTO>> GetAllUsers()
         {
             try
             {
-                var users = _context.Users.Where(u => u.IsActive)
+                var users = await _context.Users.Where(u => u.IsActive)
                     .Select(u => new UserDTO
                     {
                         UserId = u.UserId,
@@ -99,17 +101,17 @@ namespace AssertManagementAPI.Repository
                         Address = u.Address,
                         IsActive = u.IsActive,
                     })
-                    .ToList();
+                    .ToListAsync();
                 return users;
 
             }
             catch (Exception ex) { throw new Exception($"Exception While Fetching All Users{ex.Message}"); }
         }
-        public UserDTO GetUserById(int id)
+        public async Task<UserDTO> GetUserById(int id)
         {
             try
             {
-                var user = _context.Users.Where(u => u.UserId == id && u.IsActive).FirstOrDefault();
+                var user = await _context.Users.Where(u => u.UserId == id && u.IsActive).FirstOrDefaultAsync();
                 if (user != null)
                 {
                     return _mapper.Map<UserDTO>(user);
@@ -120,14 +122,14 @@ namespace AssertManagementAPI.Repository
             }
             catch (Exception ex) { throw new Exception($"Error While Fetching User Details{ex.Message}"); }
         }
-        public List<UserDTO> GetUserByName(string name)
+        public async Task<List<UserDTO>> GetUserByName(string name)
         {
             try
             {
-                var users = _context.Users.Where(u => u.Name == name && u.IsActive);
+                var users =  _context.Users.Where(u => u.Name == name && u.IsActive);
                 if (users.Any())
                 {
-                    return _mapper.ProjectTo<UserDTO>(users.AsQueryable()).ToList();
+                    return await _mapper.ProjectTo<UserDTO>(users.AsQueryable()).ToListAsync();
                 }
                 else
                 {
@@ -139,14 +141,14 @@ namespace AssertManagementAPI.Repository
                 throw new Exception($"Error While Fetching User: {ex.Message}");
             }
         }
-        public List<UserDTO> SearchUserByRole(string role)
+        public async  Task<List<UserDTO>> SearchUserByRole(string role)
         {
             try
             {   
                 if (!string.IsNullOrWhiteSpace(role))
                 {
-                    return _context.Users
-                        .Where(u => u.Role.Contains(role, StringComparison.OrdinalIgnoreCase) && u.IsActive)
+                    return await _context.Users
+                        .Where(u => u.Role ==role && u.IsActive)
                         .Select(u => new UserDTO
                         {
                             UserId = u.UserId,
@@ -158,7 +160,7 @@ namespace AssertManagementAPI.Repository
                             Role = u.Role,
                             IsActive = u.IsActive
                         })
-                        .ToList();
+                        .ToListAsync();
                 }
                 else
                 {

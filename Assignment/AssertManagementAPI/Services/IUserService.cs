@@ -5,12 +5,12 @@ namespace AssertManagementAPI.Repository
 {
     public interface IUserService
     {
-        public List<UserDTO> GetAllUsers();
-        public UserDTO GetUserById(int id);
-        public List<UserDTO> GetUserByName(string name);
-        public List<UserDTO> SearchUserByRole(string role);
-        public string AddUser(CreateUserDTO userDTO);
-        public string UpdateUser(int id, UpdateUserDTO userDTO);
-        public string DeleteUser(int id);
+        public Task<List<UserDTO>> GetAllUsers();
+        public Task<UserDTO> GetUserById(int id);
+        public Task<List<UserDTO>> GetUserByName(string name);
+        public Task<List<UserDTO>> SearchUserByRole(string role);
+        public Task<string> AddUser(CreateUserDTO userDTO);
+        public Task<string> UpdateUser(int id, UpdateUserDTO userDTO);
+        public Task<string> DeleteUser(int id);
     }
 }

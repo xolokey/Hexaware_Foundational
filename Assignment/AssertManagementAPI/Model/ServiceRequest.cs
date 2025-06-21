@@ -19,6 +19,7 @@ namespace AssertManagementAPI.Model
             public Assert? Assert { get; set; }
             public int UserId { get; set; }
             public User? User { get; set; }
+            public bool IsActive { get; set; }
         }
     }
 }
