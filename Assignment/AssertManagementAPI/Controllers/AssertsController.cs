@@ -19,7 +19,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var asserts = _assertService.AllAssert();
+                var asserts = await _assertService.AllAssert();
                 return asserts == null || !asserts.Any() ? NotFound("No Assert Found!!") : Ok(asserts);
 
             }
@@ -30,7 +30,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var assert = _assertService.AssertById(Id);
+                var assert = await _assertService.AssertById(Id);
                 return assert == null ? NotFound($"No Assert with ID:{Id} Found!!") : Ok(assert);
 
             }
@@ -42,7 +42,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var assert = _assertService.AssertByName(name);
+                var assert = await _assertService.AssertByName(name);
                 return assert != null ? Ok(assert) : NotFound($"Assert with Name:{name} Not Found!!");
 
             }
@@ -54,7 +54,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var assert = _assertService.AssertByStatus(status);
+                var assert = await _assertService.AssertByStatus(status);
                 return assert != null ? Ok(assert) : NotFound($"No Asset With Status:{status} Found!!");
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
@@ -64,7 +64,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var asert = _assertService.AssertByAssertNo(assertNo);
+                var asert = await _assertService.AssertByAssertNo(assertNo);
                 return asert != null ? Ok(asert) : NotFound($"No Assert with AssertNo:{assertNo} Found!!");
 
 
@@ -76,7 +76,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             { 
-                var assert = _assertService.Create(assertDTO);
+                var assert = await _assertService.Create(assertDTO);
                 if(assertDTO != null)
                 {
                     return Ok(assert);
@@ -90,7 +90,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var user = _assertService.Delete(Id);
+                var user = await _assertService.Delete(Id);
                 if(user == null)
                 {
                     return NotFound();
@@ -105,7 +105,7 @@ namespace AssertManagementAPI.Controllers
         {
             try
             {
-                var user = _assertService.Update(assertDTO, Id);
+                var user = await _assertService.Update(assertDTO, Id);
                 if(user != null)
                 {
                     return Ok(user);

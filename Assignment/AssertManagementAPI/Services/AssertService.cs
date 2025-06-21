@@ -17,11 +17,11 @@ namespace AssertManagementAPI.Services
             _mapper = mapper;
         }
 
-        public List<AssertDTO> AllAssert()
+        public async Task<List<AssertDTO>> AllAssert()
         {
             try
             {
-                var asserts = _context.Asserts.Where(a => a.IsAvailable)
+                var asserts = await _context.Asserts.Where(a => a.IsAvailable)
                     .Select(a => new AssertDTO
                     {
                         AssetId = a.AssetId,
@@ -35,17 +35,17 @@ namespace AssertManagementAPI.Services
                         CategoryId = a.CategoryId,
                         IsAvailable = a.IsAvailable,
                     })
-                    .ToList();
+                    .ToListAsync();
                 return asserts;
 
             }
             catch(Exception ex) { throw new Exception($"Exception while fetching Assert Details:{ex.Message}"); }
         }
-        public AssertDTO AssertById(int id)
+        public async Task<AssertDTO> AssertById(int id)
         {
             try
             {
-                var user = _context.Asserts.Where(a => a.AssetId == id && a.IsAvailable).FirstOrDefault();
+                var user = await _context.Asserts.Where(a => a.AssetId == id && a.IsAvailable).FirstOrDefaultAsync();
                 if (user!=null)
                 {
                     return _mapper.Map<AssertDTO>(user);
@@ -57,14 +57,14 @@ namespace AssertManagementAPI.Services
             catch(Exception ex) { throw new Exception($"Error while fetching Assert Details:{ex.Message}"); }
         }
         
-        public List<AssertDTO>  AssertByName(string name)
+        public async Task<List<AssertDTO>> AssertByName(string name)
         {
             try
             {
                 var asserts = _context.Asserts.Where(a => a.AssetName == name && a.IsAvailable);
                 if(asserts.Any())
                 {
-                    return _mapper.ProjectTo<AssertDTO>(asserts.AsQueryable()).ToList();
+                    return await _mapper.ProjectTo<AssertDTO>(asserts.AsQueryable()).ToListAsync();
                 }
                 return null;
                     
@@ -72,11 +72,11 @@ namespace AssertManagementAPI.Services
             } catch (Exception ex) { throw new Exception($"Error while getting Assert:{ex.Message}"); }
         }
 
-        public List<AssertDTO> AssertByAssertNo(string assertNo) 
+        public async Task<List<AssertDTO>> AssertByAssertNo(string assertNo) 
         {
             try
             {
-                var assert = _context.Asserts.Where(a => a.AssetNo.ToLower().Contains(assertNo.ToLower()) && a.IsAvailable)
+                var assert = await _context.Asserts.Where(a => a.AssetNo.ToLower().Contains(assertNo.ToLower()) && a.IsAvailable)
                     .Select(a => new AssertDTO
                     {
                         AssetId = a.AssetId,
@@ -91,18 +91,18 @@ namespace AssertManagementAPI.Services
                         IsAvailable = a.IsAvailable,
 
                     })
-                    .ToList();
+                    .ToListAsync();
                 return assert;
 
             }
             catch (Exception ex) { throw new Exception($"Error while getting through AssertNo:{ex.Message}"); }
         
         }
-        public List<AssertDTO> AssertByStatus(string status)
+        public async Task<List<AssertDTO>> AssertByStatus(string status)
         {
             try
             {
-                var assert = _context.Asserts.Where(a=> a.Status.ToLower().Contains(status.ToLower()) && a.IsAvailable)
+                var assert = await _context.Asserts.Where(a=> a.Status.ToLower().Contains(status.ToLower()) && a.IsAvailable)
                     .Select(a=> new AssertDTO
                     {
                         AssetId = a.AssetId,
@@ -116,14 +116,14 @@ namespace AssertManagementAPI.Services
                         CategoryId = a.CategoryId,
                         IsAvailable = a.IsAvailable,
                     })
-                    .ToList(); 
+                    .ToListAsync(); 
                 return assert;
 
             }
             catch (Exception ex) { throw new Exception($"{ex.Message}"); }
         }
 
-        public string Create(CreateAssertDTO dto)
+        public async Task<string> Create(CreateAssertDTO dto)
         {
             try
             {
@@ -141,8 +141,8 @@ namespace AssertManagementAPI.Services
                         CategoryId = dto.CategoryId,
                         IsAvailable = true,
                     };
-                    _context.Add(newAssert);
-                    _context.SaveChanges();
+                    await _context.AddAsync(newAssert);
+                    await _context.SaveChangesAsync();
                     return "....Assert Added Successfully....";
                 }
                 else
@@ -154,11 +154,11 @@ namespace AssertManagementAPI.Services
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        public string Update(UpdateAssertDTO dto, int Id)
+        public async Task<string> Update(UpdateAssertDTO dto, int Id)
         {
             try
             {
-                var exisAssert = _context.Asserts.Where(a=> a.AssetId == Id).FirstOrDefault();
+                var exisAssert = await _context.Asserts.Where(a=> a.AssetId == Id).FirstOrDefaultAsync();
                 if (exisAssert != null)
                 {
                     exisAssert.AssetNo = dto.AssetNo;
@@ -171,7 +171,7 @@ namespace AssertManagementAPI.Services
                     exisAssert.CategoryId = dto.CategoryId;
                     exisAssert.IsAvailable = dto.IsAvailable;
 
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return $"....Assert With ID:{Id} Updated Successfully.... ";
                 }
                 else
@@ -180,15 +180,15 @@ namespace AssertManagementAPI.Services
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
-        public string Delete(int Id)
+        public async Task<string> Delete(int Id)
         {
             try
             {
-                var assert = _context.Asserts.Where(a=> a.AssetId==Id).FirstOrDefault();
+                var assert = await _context.Asserts.Where(a=> a.AssetId==Id).FirstOrDefaultAsync();
                 if (assert != null)
                 {
                     assert.IsAvailable = false;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return $"....Assert With ID:{Id} Removed....";
                 }
                 else

@@ -5,14 +5,14 @@ namespace AssertManagementAPI.Services
 {
     public interface IAssertService
     {
-        public List<AssertDTO> AllAssert();
-        public AssertDTO AssertById(int id);
-        public List<AssertDTO> AssertByName(string name);
-        public List<AssertDTO> AssertByStatus(string status);
-        public List<AssertDTO> AssertByAssertNo(string assertNo);
-        public string Create(CreateAssertDTO dto);
-        public string Delete(int Id);
-        public string Update(UpdateAssertDTO dto,int Id); 
+        public Task<List<AssertDTO>> AllAssert();
+        public Task<AssertDTO> AssertById(int id);
+        public Task<List<AssertDTO>> AssertByName(string name);
+        public Task<List<AssertDTO>> AssertByStatus(string status);
+        public Task<List<AssertDTO>> AssertByAssertNo(string assertNo);
+        public Task<string> Create(CreateAssertDTO dto);
+        public Task<string> Delete(int Id);
+        public Task<string> Update(UpdateAssertDTO dto,int Id); 
 
     }
 }
