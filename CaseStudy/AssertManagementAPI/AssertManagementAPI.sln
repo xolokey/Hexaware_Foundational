@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssertManagementAPI", "AssertManagementAPI.csproj", "{69CA0CD0-A03F-4DB7-8208-2B774D13DFCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69CA0CD0-A03F-4DB7-8208-2B774D13DFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69CA0CD0-A03F-4DB7-8208-2B774D13DFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69CA0CD0-A03F-4DB7-8208-2B774D13DFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69CA0CD0-A03F-4DB7-8208-2B774D13DFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD1767BC-0FD1-4EA7-B492-3B8FB31630AF}
+	EndGlobalSection
+EndGlobal
